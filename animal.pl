@@ -1,27 +1,61 @@
-% Facts
-has_covering(lion, hair).
-has_covering(eagle, feathers).
-has_covering(fish, scales).
-has_covering(crocodile, scales).
+nonanimal(X):-not(animal(X)).
+vertebrata(X):-has(X,backbone),animal(X).
+nonvertebrata(X):-animal(X),not(has(X,backbone)).
+reptiles(X):-vertebrata(X),has(X,cold_blooded),has(X,scaly_skin).
+fish(X):-vertebrata(X),has(X,cold_blooded),has(X,gills),has(X,scaly_skin).
+amphibi(X):-vertebrata(X),has(X,cold_blooded),has(X,slimy_skin).
+molluscs(X):-nonvertebrata(X),has(X,soft_body).
+annelid(X):-nonvertebrata(X),has(X,segmented_body).
+arthropods(X):-nonvertebrata(X),has(X,external_skeleton).
+arachnid(X):-arthropods(X),has(X,leg_8).
+insect(X):-arthropods(X),has(X,leg_6).
+mammal(X):-vertebrata(X),has(X,warm_blooded),not(has(X,feather)).
+bird(X):-vertebrata(X),has(X,warm_blooded),has(X,feather).
 
-lays_eggs(eagle).
-lays_eggs(fish).
-lays_eggs(crocodile).
+animal(cat).
+animal(shark).
+animal(tiger).
+animal(eagle).
+animal(snake).
+animal(frog).
+animal(spider).
+animal(bee).
+animal(snail).
+animal(worm).
+animal(scorpion).
 
-gives_birth(lion).
-gives_birth(human).
-gives_birth(whale).
+has(cat,backbone).
+has(cat,warm_blooded).
 
-% Rules
-mammal(X) :- has_covering(X, hair), gives_birth(X).
-bird(X) :- has_covering(X, feathers), lays_eggs(X).
-reptile(X) :- has_covering(X, scales), lays_eggs(X), \+ bird(X), \+ fish(X).
-fish(X) :- has_covering(X, scales), lays_eggs(X), swims(X).
+has(shark,backbone).
+has(shark,gills).
+has(shark,cold_blooded).
+has(shark,scaly_skin).
 
-swims(fish).
-swims(whale).
-swims(crocodile).
+has(tiger,backbone).
+has(tiger,warm_blooded).
 
-% Example Query
-% ?- mammal(whale). → true
-% ?- bird(eagle). → true
+has(eagle,backbone).
+has(eagle,feather).
+has(eagle,warm_blooded).
+
+has(snake,backbone).
+has(snake,cold_blooded).
+has(snake,scaly_skin).
+
+has(frog,backbone).
+has(frog,cold_blooded).
+has(frog,slimy_skin).
+
+has(spider,leg_8).
+has(spider,external_skeleton).
+
+has(scorpion,leg_8).
+has(scorpion,external_skeleton).
+
+has(bee,leg_6).
+has(bee,external_skeleton).
+
+has(snail,soft_body).
+
+has(worm,segmented_body).
